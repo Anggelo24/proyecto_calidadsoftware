@@ -16,9 +16,9 @@ interface EmailParams {
 export async function sendRecoveryEmail(params: EmailParams): Promise<{ success: boolean; message: string }> {
   // Verificar si EmailJS esta configurado
   if (
-    EMAILJS_CONFIG.SERVICE_ID === 'TU_SERVICE_ID' ||
-    EMAILJS_CONFIG.TEMPLATE_ID === 'TU_TEMPLATE_ID' ||
-    EMAILJS_CONFIG.PUBLIC_KEY === 'TU_PUBLIC_KEY'
+    !EMAILJS_CONFIG.SERVICE_ID ||
+    !EMAILJS_CONFIG.TEMPLATE_ID ||
+    !EMAILJS_CONFIG.PUBLIC_KEY
   ) {
     return {
       success: false,

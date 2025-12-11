@@ -33,9 +33,9 @@ export default function RecuperarPage() {
 
   const isEmailJSConfigured = () => {
     return (
-      EMAILJS_CONFIG.SERVICE_ID !== 'TU_SERVICE_ID' &&
-      EMAILJS_CONFIG.TEMPLATE_ID !== 'TU_TEMPLATE_ID' &&
-      EMAILJS_CONFIG.PUBLIC_KEY !== 'TU_PUBLIC_KEY'
+      EMAILJS_CONFIG.SERVICE_ID.length > 0 &&
+      EMAILJS_CONFIG.TEMPLATE_ID.length > 0 &&
+      EMAILJS_CONFIG.PUBLIC_KEY.length > 0
     );
   };
 
