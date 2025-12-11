@@ -147,13 +147,24 @@ export default function LoginPage() {
               </Alert>
             )}
 
-            <div className="text-center">
-              <Link
-                href="/recuperar"
-                className="text-sm text-primary hover:underline"
-              >
-                Olvidaste tu contrasena?
-              </Link>
+            <div className="text-center space-y-2">
+              <div>
+                <Link
+                  href="/recuperar"
+                  className="text-sm text-primary hover:underline"
+                >
+                  Olvidaste tu contrasena?
+                </Link>
+              </div>
+              <div>
+                <span className="text-sm text-muted-foreground">No tienes cuenta? </span>
+                <Link
+                  href="/registro"
+                  className="text-sm text-primary hover:underline"
+                >
+                  Registrate aqui
+                </Link>
+              </div>
             </div>
           </form>
 

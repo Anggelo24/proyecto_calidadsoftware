@@ -63,6 +63,11 @@ export interface TokenValidationResult {
   email?: string;
 }
 
+export interface RegisterResult {
+  success: boolean;
+  message: string;
+}
+
 export const CONFIG = {
   MAX_LOGIN_ATTEMPTS: 4,
   BLOCK_DURATION_MINUTES: 30,

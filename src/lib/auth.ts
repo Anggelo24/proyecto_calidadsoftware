@@ -6,6 +6,7 @@ import {
   LoginResult,
   RecoveryResult,
   TokenValidationResult,
+  RegisterResult,
   CONFIG,
 } from './types';
 import {
@@ -161,6 +162,65 @@ export function login(email: string, password: string): LoginResult {
 
 export function logout(): void {
   clearSession();
+}
+
+export function register(
+  name: string,
+  email: string,
+  password: string,
+  confirmPassword: string
+): RegisterResult {
+  // Validar nombre
+  if (!name || name.trim() === '') {
+    return { success: false, message: 'El nombre es requerido' };
+  }
+
+  if (name.trim().length < 3) {
+    return { success: false, message: 'El nombre debe tener al menos 3 caracteres' };
+  }
+
+  // Validar email
+  const emailValidation = validateEmail(email);
+  if (!emailValidation.valid) {
+    return { success: false, message: emailValidation.message };
+  }
+
+  // Verificar que el email no exista
+  const existingUser = findUserByEmail(email);
+  if (existingUser) {
+    return { success: false, message: 'Este correo ya esta registrado' };
+  }
+
+  // Validar contraseña
+  const passwordValidation = validatePassword(password);
+  if (!passwordValidation.valid) {
+    return { success: false, message: passwordValidation.message };
+  }
+
+  // Validar confirmación de contraseña
+  if (password !== confirmPassword) {
+    return { success: false, message: 'Las contrasenas no coinciden' };
+  }
+
+  // Crear nuevo usuario
+  const users = getUsers();
+  const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+
+  const newUser: User = {
+    id: newId,
+    email: email.toLowerCase().trim(),
+    password: password,
+    name: name.trim(),
+    role: 'Estudiante',
+    status: 'active',
+    loginAttempts: 0,
+    blockedUntil: null,
+  };
+
+  users.push(newUser);
+  saveUsers(users);
+
+  return { success: true, message: 'Registro exitoso! Ya puedes iniciar sesion' };
 }
 
 function generateToken(): string {
